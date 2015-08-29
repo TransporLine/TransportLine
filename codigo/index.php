@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<div class="container" style="position:relative;"> 
+<div class="container"> 
   <!-- MENU -->
   <div class="container">
     <div class="row clearfix">
@@ -37,22 +37,20 @@
   <!--FIM DO MENU --> 
   
   <!--CONTEUDO DINAMICO -->
-  <div id="container">
-    <hr/>
+  <div class="container content">
     <?php include "paginas.php"; ?>
   </div>
 </div>
 <!--rodape -->
 <div class="container">
-  <div class="copyright navbar-inverse" style="position:absolute; bottom:0;">
-    <div class="container">
+    <div class="container footer" style="position: fixed;bottom: 0;">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 opyright navbar-inverse">
           <p style="color:#fff;">© 2015 i9 Solutions - Todos os direitos reservados. </p>
         </div>
       </div>
     </div>
-  </div>
+</div>
 </div>
 </body>
 </html>

@@ -1,4 +1,17 @@
-﻿<form class="form-horizontal">
+﻿<?
+	require 'classes/RepositorioCliente.php';
+	
+	$destino = "pagina/classes/cliente_incluir.php";
+	
+	if (isset($_GET['id'])) {
+		$codigo = $_GET['id'];
+		$administrador = $repositorio->getAdministrador($codigo);
+		$destino = "pagina/classes/cliente_atualizar.php";
+		$oculto = "<input type='hidden' name='id' value=".$codigo." />";
+	}
+?>
+<form action=" <?= $destino;?>" method="post" class="form-horizontal">
+<?= @$oculto;?>
   <fieldset>
     
     <!-- Form Name -->

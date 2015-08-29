@@ -1,4 +1,17 @@
-﻿<form class="form-horizontal">
+﻿<?php
+	require 'classes/RepositorioAdministrador.php';
+	
+	$destino = "pagina/classes/administrador_incluir.php";
+	
+	if (isset($_GET['id'])) {
+		$codigo = $_GET['id'];
+		$administrador = $repositorio->getAdministrador($codigo);
+		$destino = "pagina/classes/administrador_atualizar.php";
+		$oculto = "<input type='hidden' name='id' value=".$codigo." />";
+	}
+?>
+<form action=" <?= $destino;?>" method="post" class="form-horizontal">
+<?= @$oculto;?>
 <fieldset>
 
 <!-- Form Name -->
@@ -8,7 +21,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">Nome:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder="nome" class="form-control input-md" required="">
+  <input id="nome" name="nome" type="text" placeholder="nome" class="form-control input-md" value="<?php echo isset($administrador)?$administrador->getNome():""; ?>" required="">
     
   </div>
 </div>
@@ -17,7 +30,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="telefone">Telefone:</label>  
   <div class="col-md-4">
-  <input id="telefone" name="telefone" type="text" placeholder="(00) 0 0000-0000" class="form-control input-md" required="">
+  <input id="telefone" name="telefone" type="text" placeholder="(00) 0 0000-0000" class="form-control input-md" value="<?php echo isset($administrador)?$administrador->getTelefone():""; ?>" required="">
     
   </div>
 </div>
@@ -26,7 +39,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="email">Email:</label>  
   <div class="col-md-5">
-  <input id="email" name="email" type="text" placeholder="email@email.com" class="form-control input-md" required="">
+  <input id="email" name="email" type="text" placeholder="email@email.com" class="form-control input-md" value="<?php echo isset($administrador)?$administrador->getEmail():""; ?>" required="">
     
   </div>
 </div>
