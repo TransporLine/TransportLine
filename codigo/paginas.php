@@ -24,8 +24,6 @@
 		break;
 		case "sobre": $inc = 'pagina/sobre.php';
 		break;
-		case "tutorial": $inc = 'pagina/tutorial.php';
-		break;
 		case "contato": $inc = 'pagina/contato.php';
 		break;
 		case "cadastro": $inc = 'pagina/cadastro.php';

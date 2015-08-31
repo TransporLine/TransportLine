@@ -1,79 +1,122 @@
 <?php
 
-class Administrador {
+class Mototaxi {
 
     private $codigo;
     private $nome;
     private $telefone;
+    private $idCooperativa;
+    private $idPonto;
+    private $cpf;
     private $email;
     private $senha;
-    private $senhaCriptografada;
-	private $nivel_acesso;
+    private $senha_criptografada;
+    private $nivel_acesso;
+    private $liberado;
 
-    public function __construct($codigo, $nome, $telefone, $email, $senha, $senhaCriptografada,$nivel_acesso) {
+    public function __construct($codigo, $nome, $telefone, $idCooperativa, $idPonto, $cpf, $email, $senha, $senha_criptografada, $nivel_acesso, $liberado) {
+
         $this->codigo = $codigo;
         $this->nome = $nome;
         $this->telefone = $telefone;
+        $this->idCooperativa = $idCooperativa;
+        $this->idPonto = $idPonto;
+        $this->cpf = $cpf;
         $this->email = $email;
         $this->senha = $senha;
-        $this->senhaCriptografada = $senhaCriptografada;
+        $this->senha_criptografada = $senha_criptografada;
         $this->nivel_acesso = $nivel_acesso;
+        $this->liberado = $liberado;
     }
-    
-    public function getCodigo() {
+
+    function getCodigo() {
         return $this->codigo;
     }
 
-    public function getNome() {
+    function getNome() {
         return $this->nome;
     }
 
-    public function gettelefone() {
+    function getTelefone() {
         return $this->telefone;
     }
 
-    public function getemail() {
+    function getIdCooperativa() {
+        return $this->idCooperativa;
+    }
+
+    function getIdPonto() {
+        return $this->idPonto;
+    }
+
+    function getCpf() {
+        return $this->cpf;
+    }
+
+    function getEmail() {
         return $this->email;
     }
 
-    public function getsenha() {
+    function getSenha() {
         return $this->senha;
     }
 
-    public function getsenhaCriptografada() {
-        return $this->senhaCriptografada;
+    function getSenha_criptografada() {
+        return $this->senha_criptografada;
     }
-	
-	  public function getnivel_acesso() {
+
+    function getNivel_acesso() {
         return $this->nivel_acesso;
     }
 
-    public function setCodigo($codigo) {
+    function getLiberado() {
+        return $this->liberado;
+    }
+
+    function setCodigo($codigo) {
         $this->codigo = $codigo;
     }
 
-    public function setNome($nome) {
+    function setNome($nome) {
         $this->nome = $nome;
     }
 
-    public function settelefone($telefone) {
+    function setTelefone($telefone) {
         $this->telefone = $telefone;
     }
 
-    public function setemail($email) {
+    function setIdCooperativa($idCooperativa) {
+        $this->idCooperativa = $idCooperativa;
+    }
+
+    function setIdPonto($idPonto) {
+        $this->idPonto = $idPonto;
+    }
+
+    function setCpf($cpf) {
+        $this->cpf = $cpf;
+    }
+
+    function setEmail($email) {
         $this->email = $email;
     }
 
-    public function setsenha($senha) {
+    function setSenha($senha) {
         $this->senha = $senha;
     }
 
-    public function setsenhaCriptografada($senhaCriptografada) {
-        $this->senhaCriptografada = $senhaCriptografada;
+    function setSenha_criptografada($senha_criptografada) {
+        $this->senha_criptografada = $senha_criptografada;
     }
-	 public function setnivel_acesso($nivel_acesso) {
+
+    function setNivel_acesso($nivel_acesso) {
         $this->nivel_acesso = $nivel_acesso;
     }
+
+    function setLiberado($liberado) {
+        $this->liberado = $liberado;
+    }
+
 }
 ?>
 

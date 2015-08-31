@@ -1,22 +1,23 @@
 <?php
 
 require "util/conexao.php";
-include "Administrador.php";
+include "Mototaxi.php";
 
-interface iRepositorioAdministrador {
+interface iRepositorioMototaxi {
 
-    public function cadastrarAdministrador($administrador,$codigo);
+    public function cadastrarMototaxi($mototaxi, $codigo);
 
-    public function removerAdministrador($codigo);
+    public function removerMototaxi($codigo);
 
-    public function getListaAdministradores();
+    public function getListaMototaxi();
 
-    public function getAdministrador($codigo);
+    public function getMototaxi($codigo);
 }
 
-class RepositorioAdministradorMySQL implements iRepositorioAdministrador {
-    
-	private $conexao;
+class RepositorioMototaxiMySQL implements iRepositorioMototaxi {
+
+    private $conexao;
+
     public function __construct() {
         $this->conexao = new Conexao("localhost", "root", "5365462@", "transportline");
         if ($this->conexao->conectar() == false) {
@@ -24,51 +25,82 @@ class RepositorioAdministradorMySQL implements iRepositorioAdministrador {
         }
     }
 
-    public function cadastrarAdministrador($Administrador,$codigo) {
-		$sql = Null;
-        $nome = $Administrador->getNome();
-        $telefone = $Administrador->getTelefone();
-        $email = $Administrador->getEmail();
-        $senha = $Administrador->getSenha();
-        $senhaCriptografada = $Administrador->getSenhaCriptografada();
-        $nivel = $Administrador->getnivel_acesso();
-		
-		if(isset($codigo)){
-		$sql = "UPDATE administrador SET nome='$nome', telefone='$telefone', email='$email', senha='$senha', senha_criptografada='$senhaCriptografada', nivel_acesso='$nivel' WHERE id=$codigo";
-		}else{
-        $sql = "INSERT INTO `administrador`(`id`, `nome`, `telefone`, `email`, `senha`, `senha_criptografada`, `nivel_acesso`) VALUES (NULL,'$nome','$telefone','$email','$senha','$senhaCriptografada',$nivel)";
-		}
-		
-        $this->conexao->executarQuery($sql);
-    }
+    public function cadastrarMototaxi($mototaxi, $codigo) {
+        $sql = Null;
 
-    public function removerAdministrador($codigo) {
-        $sql = "DELETE FROM Administrador WHERE id = '$codigo'";
-        $this->conexao->executarQuery($sql);
-    }
+        $nome = $mototaxi->getNome();
+        $telefone = $mototaxi->getTelefone();
+        $idCooperativa = $mototaxi->getidCooperativa();
+        $idPonto = $mototaxi->getidPonto();
+        $cpf = $mototaxi->getCpf();
+        $email = $mototaxi->getEmail();
+        $senha = $mototaxi->getSenha();
+        $senhaCriptografada = $Mototaxi->getSenhaCriptografada();
+        $nivel = $mototaxi->getnivel_acesso();
+        $liberado = $mototaxi->getliberado();
 
-    public function getListaAdministradores() {
-        $listagem = $this->conexao->executarQuery("SELECT * FROM Administrador");
-       
-        $arrayAdministrador = array();
-        
-        while ($row = mysqli_fetch_array($listagem)) {
-            $Administrador = new Administrador(
-                    $row['id'], $row['Nome'], $row['telefone'], $row['email'], $row['nivel_acesso']);
-            array_push($arrayAdministrador, $Administrador);
+        if (isset($codigo)) {
+            $sql = "UPDATE mototaxi SET "
+                    . "nome='$nome',"
+                    . " telefone='$telefone', "
+                    . "idCooperativa ='$idCooperativa',"
+                    . "idPonto ='$idPonto', cpf='$cpf',"
+                    . " email='$email', senha='$senha',"
+                    . " senha_criptografada='$senhaCriptografada',"
+                    . " nivel_acesso='$nivel' WHERE id=$codigo";
+        } else {
+            $sql = "INSERT INTO `mototaxi`(`id`, "
+                    . "`nome`,"
+                    . " `telefone`,"
+                    . " `idCooperativa`,"
+                    . " `idPonto`,"
+                    . " `cpf`,"
+                    . " `email`,"
+                    . " `senha`,"
+                    . " `senha_criptografada`,"
+                    . " `nivel_acesso`) VALUES (NULL,"
+                    . "'$nome',"
+                    . "'$telefone',"
+                    . "'$idCooperativa',"
+                    . "'$idPonto',"
+                    . "'$cpf',"
+                    . "'$email',"
+                    . "'$senha',"
+                    . "'$senhaCriptografada'"
+                    . ",$nivel)";
         }
-        return $arrayAdministrador;
-    }
-    public function getAdministrador($codigo) {
-        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM administrador where id = '$codigo'");
-        
-            $Administrador = new Administrador(
-                    $row['id'], $row['nome'], $row['telefone'], $row['email'], $row['senha'], $row['senha_criptografada'], $row['nivel_acesso']);
 
-        return $Administrador;
+        $this->conexao->executarQuery($sql);
+    }
+
+    public function removerMototaxi($codigo) {
+        $sql = "DELETE FROM Mototaxi WHERE id = '$codigo'";
+        $this->conexao->executarQuery($sql);
+    }
+
+    public function getListaMototaxi() {
+        $listagem = $this->conexao->executarQuery("SELECT * FROM Mototaxi");
+
+        $arrayMototaxi = array();
+
+        while ($row = mysqli_fetch_array($listagem)) {
+            $Mototaxi = new Mototaxi(
+                    $row['id'], $row['Nome'], $row['telefone'], $row['email'], $row['nivel_acesso']);
+            array_push($arrayMototaxi, $Mototaxi);
+        }
+        return $arrayMototaxi;
+    }
+
+    public function getMototaxi($codigo) {
+        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM mototaxi where id = '$codigo'");
+
+        $Mototaxi = new Mototaxi(
+                $row['id'], $row['nome'], $row['telefone'], $row['email'], $row['senha'], $row['senha_criptografada'], $row['nivel_acesso']);
+
+        return $Mototaxi;
     }
 
 }
 
-$repositorio = new RepositorioAdministradorMySQL();
+$repositorio = new RepositorioMototaxiMySQL();
 ?>

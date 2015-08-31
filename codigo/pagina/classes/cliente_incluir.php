@@ -1,6 +1,6 @@
 <?php 
 	include 'RepositorioCliente.php';
-	$administrador = new Administrador(
+	$cliente = new Cliente(
         null, 
         filter_input(INPUT_POST,'nome'),
 		filter_input(INPUT_POST,'rg'),
@@ -14,5 +14,5 @@
 		4
        );
 		
-	$repositorio->cadastrarCliente($administrador,null);
+	$repositorio->cadastrarCliente($cliente,null);
 ?>

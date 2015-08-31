@@ -1,20 +1,20 @@
 <?php
 
 require "util/conexao.php";
-include "Administrador.php";
+include "Cooperativa.php";
 
-interface iRepositorioAdministrador {
+interface iRepositorioCooperativa {
 
-    public function cadastrarAdministrador($administrador,$codigo);
+    public function cadastrarCooperativa($cooperativa,$codigo);
 
-    public function removerAdministrador($codigo);
+    public function removerCooperativa($codigo);
 
-    public function getListaAdministradores();
+    public function getListaCooperativaes();
 
-    public function getAdministrador($codigo);
+    public function getCooperativa($codigo);
 }
 
-class RepositorioAdministradorMySQL implements iRepositorioAdministrador {
+class RepositorioCooperativaMySQL implements iRepositorioCooperativa {
     
 	private $conexao;
     public function __construct() {
@@ -24,51 +24,51 @@ class RepositorioAdministradorMySQL implements iRepositorioAdministrador {
         }
     }
 
-    public function cadastrarAdministrador($Administrador,$codigo) {
-		$sql = Null;
-        $nome = $Administrador->getNome();
-        $telefone = $Administrador->getTelefone();
-        $email = $Administrador->getEmail();
-        $senha = $Administrador->getSenha();
-        $senhaCriptografada = $Administrador->getSenhaCriptografada();
-        $nivel = $Administrador->getnivel_acesso();
+    public function cadastrarCooperativa($Cooperativa,$codigo) {
+        $sql = Null;
+        $nome = $Cooperativa->getNome();
+        $telefone = $Cooperativa->getTelefone();
+        $email = $Cooperativa->getEmail();
+        $senha = $Cooperativa->getSenha();
+        $senhaCriptografada = $Cooperativa->getSenhaCriptografada();
+        $nivel = $Cooperativa->getnivel_acesso();
 		
 		if(isset($codigo)){
-		$sql = "UPDATE administrador SET nome='$nome', telefone='$telefone', email='$email', senha='$senha', senha_criptografada='$senhaCriptografada', nivel_acesso='$nivel' WHERE id=$codigo";
+		$sql = "UPDATE cooperativa SET nome='$nome', telefone='$telefone', email='$email', senha='$senha', senha_criptografada='$senhaCriptografada', nivel_acesso='$nivel' WHERE id=$codigo";
 		}else{
-        $sql = "INSERT INTO `administrador`(`id`, `nome`, `telefone`, `email`, `senha`, `senha_criptografada`, `nivel_acesso`) VALUES (NULL,'$nome','$telefone','$email','$senha','$senhaCriptografada',$nivel)";
+        $sql = "INSERT INTO `cooperativa`(`id`, `nome`, `telefone`, `email`, `senha`, `senha_criptografada`, `nivel_acesso`) VALUES (NULL,'$nome','$telefone','$email','$senha','$senhaCriptografada',$nivel)";
 		}
 		
         $this->conexao->executarQuery($sql);
     }
 
-    public function removerAdministrador($codigo) {
-        $sql = "DELETE FROM Administrador WHERE id = '$codigo'";
+    public function removerCooperativa($codigo) {
+        $sql = "DELETE FROM Cooperativa WHERE id = '$codigo'";
         $this->conexao->executarQuery($sql);
     }
 
-    public function getListaAdministradores() {
-        $listagem = $this->conexao->executarQuery("SELECT * FROM Administrador");
+    public function getListaCooperativaes() {
+        $listagem = $this->conexao->executarQuery("SELECT * FROM Cooperativa");
        
-        $arrayAdministrador = array();
+        $arrayCooperativa = array();
         
         while ($row = mysqli_fetch_array($listagem)) {
-            $Administrador = new Administrador(
+            $Cooperativa = new Cooperativa(
                     $row['id'], $row['Nome'], $row['telefone'], $row['email'], $row['nivel_acesso']);
-            array_push($arrayAdministrador, $Administrador);
+            array_push($arrayCooperativa, $Cooperativa);
         }
-        return $arrayAdministrador;
+        return $arrayCooperativa;
     }
-    public function getAdministrador($codigo) {
-        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM administrador where id = '$codigo'");
+    public function getCooperativa($codigo) {
+        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM cooperativa where id = '$codigo'");
         
-            $Administrador = new Administrador(
+            $Cooperativa = new Cooperativa(
                     $row['id'], $row['nome'], $row['telefone'], $row['email'], $row['senha'], $row['senha_criptografada'], $row['nivel_acesso']);
 
-        return $Administrador;
+        return $Cooperativa;
     }
 
 }
 
-$repositorio = new RepositorioAdministradorMySQL();
+$repositorio = new RepositorioCooperativaMySQL();
 ?>

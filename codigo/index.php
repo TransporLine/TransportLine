@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
 <meta charset="utf-8">
-<title>TransportLine</title>
+<title>TransporLine</title>
 <link rel="shortcut icon" href="imagens/site/transportline.ico" type="image/x-icon" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="TransportLine">
@@ -37,20 +37,22 @@
   <!--FIM DO MENU --> 
   
   <!--CONTEUDO DINAMICO -->
-  <div class="container content">
+  <div id="container">
+    <hr/>
     <?php include "paginas.php"; ?>
   </div>
 </div>
 <!--rodape -->
 <div class="container">
-    <div class="container footer" style="position: fixed;bottom: 0;">
+  <div class="copyright navbar-inverse">
+    <div class="container">
       <div class="row">
-        <div class="col-md-12 opyright navbar-inverse">
+        <div class="col-md-12">
           <p style="color:#fff;">© 2015 i9 Solutions - Todos os direitos reservados. </p>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </div>
 </body>
 </html>

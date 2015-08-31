@@ -10,7 +10,5 @@
 		filter_input(INPUT_POST,'1')
        );
 		
-	$repositorio->cadastrarAdministrador($administrador,null);
-	 include 'alerta.php';
-     header("refresh: 4;");
+	$repositorio->cadastrarAdministrador($administrador,filter_input(INPUT_POST,'id'));
 ?>

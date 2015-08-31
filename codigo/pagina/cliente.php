@@ -1,11 +1,11 @@
-﻿<?
+﻿<?php
 	require 'classes/RepositorioCliente.php';
 	
 	$destino = "pagina/classes/cliente_incluir.php";
 	
 	if (isset($_GET['id'])) {
 		$codigo = $_GET['id'];
-		$administrador = $repositorio->getAdministrador($codigo);
+		$administrador = $repositorio->getCliente($codigo);
 		$destino = "pagina/classes/cliente_atualizar.php";
 		$oculto = "<input type='hidden' name='id' value=".$codigo." />";
 	}
