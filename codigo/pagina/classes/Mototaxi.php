@@ -4,29 +4,33 @@ class Mototaxi {
 
     private $codigo;
     private $nome;
+    private $endereco;
+    private $cidade;
+    private $uf;
     private $telefone;
     private $idCooperativa;
     private $idPonto;
     private $cpf;
-    private $email;
-    private $senha;
-    private $senha_criptografada;
-    private $nivel_acesso;
+    private $preco_km;
+    private $disponivel;
     private $liberado;
+    private $idUsuario;
 
-    public function __construct($codigo, $nome, $telefone, $idCooperativa, $idPonto, $cpf, $email, $senha, $senha_criptografada, $nivel_acesso, $liberado) {
+    public function __construct($codigo, $nome, $endereco,$cidade, $uf, $telefone, $idCooperativa, $idPonto, $cpf, $preco_km, $disponivel, $liberado, $idUsuario) {
 
         $this->codigo = $codigo;
         $this->nome = $nome;
+        $this->endereco = $endereco;
+        $this->cidade = $cidade;
+        $this->uf = $uf;
         $this->telefone = $telefone;
         $this->idCooperativa = $idCooperativa;
         $this->idPonto = $idPonto;
         $this->cpf = $cpf;
-        $this->email = $email;
-        $this->senha = $senha;
-        $this->senha_criptografada = $senha_criptografada;
-        $this->nivel_acesso = $nivel_acesso;
+        $this->preco_km = $preco_km;
+        $this->disponivel = $disponivel;
         $this->liberado = $liberado;
+        $this->idUsuario = $idUsuario;
     }
 
     function getCodigo() {
@@ -53,24 +57,12 @@ class Mototaxi {
         return $this->cpf;
     }
 
-    function getEmail() {
-        return $this->email;
-    }
-
-    function getSenha() {
-        return $this->senha;
-    }
-
-    function getSenha_criptografada() {
-        return $this->senha_criptografada;
-    }
-
-    function getNivel_acesso() {
-        return $this->nivel_acesso;
-    }
-
     function getLiberado() {
         return $this->liberado;
+    }
+
+    function getIdUsuario() {
+        return $this->idUsuario;
     }
 
     function setCodigo($codigo) {
@@ -97,25 +89,53 @@ class Mototaxi {
         $this->cpf = $cpf;
     }
 
-    function setEmail($email) {
-        $this->email = $email;
-    }
-
-    function setSenha($senha) {
-        $this->senha = $senha;
-    }
-
-    function setSenha_criptografada($senha_criptografada) {
-        $this->senha_criptografada = $senha_criptografada;
-    }
-
-    function setNivel_acesso($nivel_acesso) {
-        $this->nivel_acesso = $nivel_acesso;
-    }
-
     function setLiberado($liberado) {
         $this->liberado = $liberado;
     }
+
+    function setIdUsuario($idUsuario) {
+        $this->idUsuario = $idUsuario;
+    }
+
+    function getEndereco() {
+        return $this->endereco;
+    }
+
+    function setEndereco($endereco) {
+        $this->endereco = $endereco;
+    }
+
+    function getPreco_km() {
+        return $this->preco_km;
+    }
+
+    function getDisponivel() {
+        return $this->disponivel;
+    }
+
+    function setPreco_km($preco_km) {
+        $this->preco_km = $preco_km;
+    }
+
+    function setDisponivel($disponivel) {
+        $this->disponivel = $disponivel;
+    }
+    function getCidade() {
+        return $this->cidade;
+    }
+
+    function getUf() {
+        return $this->uf;
+    }
+
+    function setCidade($cidade) {
+        $this->cidade = $cidade;
+    }
+
+    function setUf($uf) {
+        $this->uf = $uf;
+    }
+
 
 }
 ?>

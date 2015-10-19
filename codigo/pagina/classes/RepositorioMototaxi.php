@@ -1,17 +1,23 @@
 <?php
 
-require "util/conexao.php";
+require_once "util/conexao.php";
 include "Mototaxi.php";
 
-interface iRepositorioMototaxi {
+interface iRepositorioMototaxi{
 
     public function cadastrarMototaxi($mototaxi, $codigo);
 
     public function removerMototaxi($codigo);
 
-    public function getListaMototaxi();
+    public function getListaMototaxi($idcooperativa);
 
-    public function getMototaxi($codigo);
+    public function getMototaxi($codigo,$idcooperativa);
+
+    public function getListaMototaxiSituacao($situacao,$idcooperativa);
+    
+     public function getListaMototaxiPonto($ponto);
+
+    public function getMototaxiIdUsuario($codigo);
 }
 
 class RepositorioMototaxiMySQL implements iRepositorioMototaxi {
@@ -19,7 +25,7 @@ class RepositorioMototaxiMySQL implements iRepositorioMototaxi {
     private $conexao;
 
     public function __construct() {
-        $this->conexao = new Conexao("localhost", "root", "5365462@", "transportline");
+        $this->conexao = new Conexao("localhost", "u969309842_tl", "5365462@", "u969309842_tl");
         if ($this->conexao->conectar() == false) {
             echo "Erro:" . mysqli_error();
         }
@@ -29,47 +35,48 @@ class RepositorioMototaxiMySQL implements iRepositorioMototaxi {
         $sql = Null;
 
         $nome = $mototaxi->getNome();
+        $endereco = $mototaxi->getEndereco();
+        $cidade = $mototaxi->getCidade();
+        $uf = $mototaxi->getUf();
         $telefone = $mototaxi->getTelefone();
-        $idCooperativa = $mototaxi->getidCooperativa();
-        $idPonto = $mototaxi->getidPonto();
+        $idCooperativa = $mototaxi->getIdCooperativa();
+        $idPonto = $mototaxi->getIdPonto();
         $cpf = $mototaxi->getCpf();
-        $email = $mototaxi->getEmail();
-        $senha = $mototaxi->getSenha();
-        $senhaCriptografada = $Mototaxi->getSenhaCriptografada();
-        $nivel = $mototaxi->getnivel_acesso();
-        $liberado = $mototaxi->getliberado();
+        $preco_km = $mototaxi->getPreco_km();
+        $disponivel = $mototaxi->getDisponivel();
+        $liberado = $mototaxi->getLiberado();
+        $idUsuario = $mototaxi->getIdUsuario();
 
         if (isset($codigo)) {
-            $sql = "UPDATE mototaxi SET "
-                    . "nome='$nome',"
-                    . " telefone='$telefone', "
-                    . "idCooperativa ='$idCooperativa',"
-                    . "idPonto ='$idPonto', cpf='$cpf',"
-                    . " email='$email', senha='$senha',"
-                    . " senha_criptografada='$senhaCriptografada',"
-                    . " nivel_acesso='$nivel' WHERE id=$codigo";
+            $sql = "UPDATE mototaxi SET"
+                    . "nome = '$nome',"
+                    . "endereco = '$endereco',"
+                    . "cidade = '$cidade',"
+                    . "uf = '$uf',"
+                    . "telefone = '$telefone',"
+                    . "idCooperativa = '$idCooperativa',"
+                    . "idPonto = '$idPonto',"
+                    . "cpf = '$cpf',"
+                    . "preco_por_km = '$preco_km',"
+                    . "disponivel = '$disponivel',"
+                    . "liberado = '$liberado',"
+                    . "idUsuario = '$idUsuario' WHERE id=$codigo";
         } else {
-            $sql = "INSERT INTO `mototaxi`(`id`, "
-                    . "`nome`,"
-                    . " `telefone`,"
-                    . " `idCooperativa`,"
-                    . " `idPonto`,"
-                    . " `cpf`,"
-                    . " `email`,"
-                    . " `senha`,"
-                    . " `senha_criptografada`,"
-                    . " `nivel_acesso`) VALUES (NULL,"
+            $sql = "INSERT INTO mototaxi(`id`, `nome`, `endereco`, `cidade`, `uf`, `telefone`, `idCooperativa`, `idPonto`, `cpf`, `preco_por_km`, `disponivel`, `liberado`, `idUsuario`) VALUES (NULL,"
                     . "'$nome',"
+                    . "'$endereco',"
+                    . "'$cidade',"
+                    . "'$uf',"
                     . "'$telefone',"
                     . "'$idCooperativa',"
                     . "'$idPonto',"
                     . "'$cpf',"
-                    . "'$email',"
-                    . "'$senha',"
-                    . "'$senhaCriptografada'"
-                    . ",$nivel)";
+                    . "'$preco_km',"
+                    . "'$disponivel',"
+                    . "'$liberado'"
+                    . ",'$idUsuario')";
         }
-
+		
         $this->conexao->executarQuery($sql);
     }
 
@@ -78,29 +85,122 @@ class RepositorioMototaxiMySQL implements iRepositorioMototaxi {
         $this->conexao->executarQuery($sql);
     }
 
-    public function getListaMototaxi() {
-        $listagem = $this->conexao->executarQuery("SELECT * FROM Mototaxi");
+    public function getListaMototaxi($idcooperativa) {
+        $listagem = $this->conexao->executarQuery("SELECT * FROM mototaxi WHERE idCooperativa=$idcooperativa");
 
         $arrayMototaxi = array();
 
         while ($row = mysqli_fetch_array($listagem)) {
-            $Mototaxi = new Mototaxi(
-                    $row['id'], $row['Nome'], $row['telefone'], $row['email'], $row['nivel_acesso']);
+             $Mototaxi = new Mototaxi(
+                    $row['id'], 
+                    $row['nome'],
+                    $row['endereco'],
+                    $row['cidade'],
+                    $row['uf'],
+                    $row['telefone'],
+                    $row['idCooperativa'],
+                    $row['idPonto'],
+                    $row['cpf'],
+                    $row['preco_por_km'],
+                    $row['disponivel'],
+                    $row['liberado'],
+                    $row['idUsuario']);
             array_push($arrayMototaxi, $Mototaxi);
         }
         return $arrayMototaxi;
     }
 
-    public function getMototaxi($codigo) {
-        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM mototaxi where id = '$codigo'");
+    public function getMototaxi($codigo,$idcooperativa) {
+        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM mototaxi where id = '$codigo' and idCooperativa = $idcooperativa");
+
+               $Mototaxi = new Mototaxi(
+                    $row['id'], 
+                    $row['nome'],
+                    $row['endereco'],
+                    $row['cidade'],
+                    $row['uf'],
+                    $row['telefone'],
+                    $row['idCooperativa'],
+                    $row['idPonto'],
+                    $row['cpf'],
+                    $row['preco_por_km'],
+                    $row['disponivel'],
+                    $row['liberado'],
+                    $row['idUsuario']);
+        
+        return $Mototaxi;
+    }
+
+    public function getListaMototaxiSituacao($situacao, $idcooperativa) {
+      $listagem = $this->conexao->executarQuery("SELECT * FROM mototaxi where liberado = '$situacao' and idcooperativa = $idcooperativa");
+
+        $arrayMototaxi = array();
+
+        while ($row = mysqli_fetch_array($listagem)) {
+             $Mototaxi = new Mototaxi(
+                    $row['id'], 
+                    $row['nome'],
+                    $row['endereco'],
+                    $row['cidade'],
+                    $row['uf'],
+                    $row['telefone'],
+                    $row['idCooperativa'],
+                    $row['idPonto'],
+                    $row['cpf'],
+                    $row['preco_por_km'],
+                    $row['disponivel'],
+                    $row['liberado'],
+                    $row['idUsuario']);
+            array_push($arrayMototaxi, $Mototaxi);
+        }
+        return $arrayMototaxi;
+    }
+        public function getListaMototaxiPonto($idponto) {
+      $listagem = $this->conexao->executarQuery("SELECT * FROM mototaxi where idPonto = '$idponto'");
+
+        $arrayMototaxi = array();
+
+        while ($row = mysqli_fetch_array($listagem)) {
+             $Mototaxi = new Mototaxi(
+                    $row['id'], 
+                    $row['nome'],
+                    $row['endereco'],
+                    $row['cidade'],
+                    $row['uf'],
+                    $row['telefone'],
+                    $row['idCooperativa'],
+                    $row['idPonto'],
+                    $row['cpf'],
+                    $row['preco_por_km'],
+                    $row['disponivel'],
+                    $row['liberado'],
+                    $row['idUsuario']);
+            array_push($arrayMototaxi, $Mototaxi);
+        }
+        return $arrayMototaxi;
+    }
+    public function getMototaxiIdUsuario($codigo) {
+        $row = $this->conexao->obterPrimeiroRegistroQuery("SELECT * FROM mototaxi where idUsuario = '$codigo'");
 
         $Mototaxi = new Mototaxi(
-                $row['id'], $row['nome'], $row['telefone'], $row['email'], $row['senha'], $row['senha_criptografada'], $row['nivel_acesso']);
-
+                    $row['id'], 
+                    $row['nome'],
+                    $row['endereco'],
+                    $row['cidade'],
+                    $row['uf'],
+                    $row['telefone'],
+                    $row['idCooperativa'],
+                    $row['idPonto'],
+                    $row['cpf'],
+                    $row['preco_por_km'],
+                    $row['disponivel'],
+                    $row['liberado'],
+                    $row['idUsuario']);
+        
         return $Mototaxi;
     }
 
 }
 
-$repositorio = new RepositorioMototaxiMySQL();
+$repositorioMototaxi = new RepositorioMototaxiMySQL();
 ?>

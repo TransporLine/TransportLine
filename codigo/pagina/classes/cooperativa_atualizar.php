@@ -1,14 +1,16 @@
 <?php 
-	include 'classe/RepositorioAdministrador.php';
-	$administrador = new Administrador(
-        null, 
-        filter_input(INPUT_POST,'nome'),
-		filter_input(INPUT_POST,'telefone'),
-		filter_input(INPUT_POST,'email'),
-		filter_input(INPUT_POST,'senha'),
-		md5(filter_input(INPUT_POST,'senha')),
-		filter_input(INPUT_POST,'1')
-       );
+	include 'RepositorioCooperativa.php';
+	$repositorioCooperativa = new Cooperativa(
+            NULL,
+            filter_input(INPUT_POST,'nome'),
+            filter_input(INPUT_POST,'endereco'),
+            filter_input(INPUT_POST,'cidade'),
+            filter_input(INPUT_POST,'uf'),
+            filter_input(INPUT_POST,'telefone'),
+            filter_input(INPUT_POST,'email'),
+            filter_input(INPUT_POST,'senha'),
+            filter_input(INPUT_POST,'senha_criptografada'),
+            2);
 		
-	$repositorio->cadastrarAdministrador($administrador,filter_input(INPUT_POST,'id'));
+	$repositorioCooperativa->cadastrarAdministrador($Cooperativa,filter_input(INPUT_POST,'id'));
 ?>

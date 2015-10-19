@@ -1,0 +1,25 @@
+#mapa{
+    float:left;
+    width: 100%;
+    height: 450px;
+    border: 3px solid #137cb3;
+    bottom: 5px;
+
+}
+#mapa_view{
+    float:left;
+    width: 70%;
+    height: 450px;
+    border: 3px solid #137cb3;
+    bottom: 5px;
+
+}
+#informacao{
+    position: relative;
+    float:left;
+    width:30%;
+    height: 450px;
+    border: 3px solid #137cb3;
+    border-left: 0px;
+    bottom: 5px;
+}

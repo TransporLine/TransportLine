@@ -25,12 +25,17 @@ class Conexao{
     }
     
     public function executarQuery($sql){
-        return mysqli_query($this->conexao, $sql);
+        return mysqli_query($this->conexao,$sql);
     }
     public function obterPrimeiroRegistroQuery($query){
         $linhas = $this->executarQuery($query);
         return mysqli_fetch_array($linhas);
     }
-
+    
+    public function lastId(){
+        $sql = "SELECT LAST_INSERT_ID() as id";
+        $linha = $this->obterPrimeiroRegistroQuery($sql);
+        return $linha['id'];
+    }
 }
 ?>
