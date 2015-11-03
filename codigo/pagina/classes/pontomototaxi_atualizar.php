@@ -1,8 +1,14 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+require "RepositorioPontomototaxi.php";
+$ponto = new Ponto(NULL, 
+        filter_input(INPUT_POST, "nome"),
+        filter_input(INPUT_POST, "endereco"),
+        filter_input(INPUT_POST, "latitude"), 
+        filter_input(INPUT_POST, "longitude"),
+        filter_input(INPUT_POST, "idCooperativa")
+);
+$repositorioPonto -> cadastrarPonto($ponto, filter_input(INPUT_POST, 'idPonto'));
+$escopo = "Ponto Moto taxi";
+$mensagem = "Atualizado com sucesso!";
+include 'util/alerta.php';
+?>

@@ -1,5 +1,4 @@
 <?php
-
 require_once "util/conexao.php";
 include "Pontomototaxi.php";
 
@@ -71,7 +70,7 @@ class RepositorioPontoMySQL implements iRepositorioPonto {
     }
 
     public function getPontoIdCooperativa($codigo) {
-        $listagem = $this->conexao->executarQuery("SELECT * FROM ponto_mototaxi where cooperativa = $codigo");
+          $listagem = $this->conexao->executarQuery("SELECT * FROM ponto_mototaxi WHERE cooperativa = $codigo");
 
         $arrayPonto = array();
 
@@ -80,8 +79,8 @@ class RepositorioPontoMySQL implements iRepositorioPonto {
                     $row['id'], $row['nome'], $row['endereco'], $row['latitude'], $row['longitude'], $row['cooperativa']);
             array_push($arrayPonto, $Ponto);
         }
+        return $arrayPonto;
     }
-
 }
 
 $repositorioPonto = new RepositorioPontoMySQL();

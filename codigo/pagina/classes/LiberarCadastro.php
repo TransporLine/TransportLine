@@ -11,7 +11,7 @@ class RepositorioAdministradorMySQL implements iRepositorioLiberacao {
     private $conexao;
 
     public function __construct() {
-        $this->conexao = new Conexao("localhost", "root", "5365462@", "transporline");
+        $this->conexao = new Conexao("localhost", "u969309842_tl", "5365462@", "u969309842_tl");
         if ($this->conexao->conectar() == false) {
             echo "Erro:" . mysqli_error();
         }

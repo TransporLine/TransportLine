@@ -32,4 +32,4 @@ include 'RepositorioUsuario.php';
          $escopo = "Moto taxi";
         $mensagem = "Cadastrado com sucesso!";
          //include 'util/alerta.php';
-        ?>
+    ?>

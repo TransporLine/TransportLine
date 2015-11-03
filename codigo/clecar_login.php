@@ -8,11 +8,11 @@ include 'pagina/classes/Usuario.php';
         switch ($nivel) {
         case 1 : $url = '?tl=administrar_adm&adm=1';
             break;
-        case 2 : $url = '?tl=administrar_cooper';
+        case 2 : $url = '?tl=administrar_cooper&adm=1';
             break;
-        case 3 : $url = '?tl=administrar_moto';
+        case 3 : $url = '?tl=administrar_moto&adm=1';
             break;
-        case 4 : $url = '?tl=administrar_cli';
+        case 4 : $url = '?tl=administrar_cli&adm=1';
             break;
     }
      header('location:' . $url);

@@ -4,11 +4,12 @@
         <meta charset="utf-8">
         <title>TransportLine</title>
         <link rel="shortcut icon" href="imagens/site/transportline.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="TransportLine">
         <meta name="author" content="i9 Solutions">
         <link href="estilos/css/lavish-bootstrap.css" rel="stylesheet">
         <link href="estilos/css/estilos.css" rel="stylesheet">
+        <link href="estilos/css/tabelas.css" rel="stylesheet">
         <script type="text/javascript" src="estilos/js/jquery.min.js"></script>
         <script type="text/javascript" src="estilos/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="estilos/js/scripts.js"></script>
@@ -27,7 +28,7 @@
         </script>
 
         <script type="text/javascript">
-            function vCPF(i) {
+            function vCPF(i){
                 i.setCustomValidity(validaCPF(i.value) ? '' : 'CPF inválido!');
             }
         </script>
@@ -82,6 +83,21 @@
                     <div class="row" style="bottom: 0">
                         <div class="col-md-12 copyright navbar-inverse">
                             <p style="color:#fff;">© 2015 i9 Solutions - Todos os direitos reservados. </p>
+							  <?php
+                                    $variavel = filter_input(INPUT_GET, "tl");
+                                    switch ($variavel) {
+                                        case "administrar_adm": echo '<p><a style="color:#fff;" href="?tl=sair">Sair</a></p>';
+                                            break;
+                                        case "administrar_moto" : echo '<p><a style="color:#fff;" href="?tl=sair">Sair</a></p>';
+                                            break;
+                                        case "administrar_cli": echo '<p><a style="color:#fff;" href="?tl=sair">Sair</a></p>';
+                                            break;
+                                        case "administrar_cooper": echo '<p><a style="color:#fff;" href="?tl=sair">Sair</a></p>';
+                                            break;
+                                        default : echo '';
+                                            break;
+                                    }
+                                    ?>
                         </div>
                     </div>
                 </div>

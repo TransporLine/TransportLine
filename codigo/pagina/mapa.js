@@ -18,6 +18,26 @@ function removeMarcadores() {
     }
 }
 
+//SETAR ENDEREÇO VIA LATLNG
+function addEndereco(position){
+
+            pontoPadrao = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            mapa.setCenter(pontoPadrao);
+
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode(
+                    {
+                "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+            },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $("#endereco").val(results[0].formatted_address);
+                        }
+                    });
+        }
+//FIM DA FUNÇÃO
+
 function iniciar() {
     var param = {
         center: new google.maps.LatLng(51.508742, -0.120850),
@@ -47,7 +67,6 @@ function iniciar() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             localizacao = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
             mapa.setCenter(localizacao);
         });
     }
@@ -56,6 +75,8 @@ function iniciar() {
         removeMarcadores();
         //adicionar um novo marcador em nosso mapa
         addMarcadores(event.latLng, mapa);
+        addEndereco(event.latLng);
+     
     });
 }
 google.maps.event.addDomListener(window, 'load', iniciar);

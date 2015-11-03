@@ -10,14 +10,29 @@ $destino = "pagina/classes/mototaxi_incluir.php";
 if (isset($_GET['id'])) {
     $codigo = $_GET['id'];
     $mototaxi = $repositorio->getMototaxiIdUsuario($codigo);
-    $usuario = $repositorioUsuario -> getUsuarioPorId($mototaxi->getIdUsuario());
+    $usuario = $repositorioUsuario->getUsuarioPorId($mototaxi->getIdUsuario());
     $destino = "pagina/classes/mototaxi_atualizar.php";
     $oculto = "<input type='hidden' name='id' value=" . $mototaxi->getCodigo() . " />";
 }
 ?>
+<head>
+    <script type="text/javascript">
+        //Função para listar curso
+        function buscaPonto() {
+            var id = $('#idCooperativa').val();  //dados da cooperativa
+            if (id) {
+                var url = 'pagina/lista_ponto_inc.php?id=' + id;  //caminho do arquivo php
+                $.get(url, function (dataReturn) {
+                    $('#listaPontos').html(dataReturn);  //coloco na div o retorno da requisicao
+                });
+            }
+        }
+    </script>
+</head>
+
 ﻿<form action="<?= $destino; ?>" method="post" class="form-horizontal">
     <?= @$oculto; ?>
-      <input type="hidden" name="idUsuario"  value="<?php echo isset($mototaxi) ? $mototaxi->getIdUsuario() : ""; ?>" />
+    <input type="hidden" name="idUsuario"  value="<?php echo isset($mototaxi) ? $mototaxi->getIdUsuario() : ""; ?>" />
     <input type="hidden" name="disponivel"  value="1" />
     <input type="hidden" name="liberado"  value="0" />
     <input type="hidden" name="nivel"  value="2" />
@@ -31,16 +46,16 @@ if (isset($_GET['id'])) {
             <label class="col-md-4 control-label" for="nome">Nome:</label>  
             <div class="col-md-5">
                 <input id="nome" name="nome" type="text" placeholder="nome"  class="form-control input-md"  pattern="[A-Za-zA-zÀ-ú ]+"
-                        value="<?php echo isset( $mototaxi) ?  $mototaxi->getNome() : ""; ?>" required>
+                       value="<?php echo isset($mototaxi) ? $mototaxi->getNome() : ""; ?>" required>
 
             </div>
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label class="col-md-4 control-label" for="telefone">CPF:</label>  
             <div class="col-md-4">
                 <input id="cpf" name="cpf" type="text" placeholder="000.000.000-00" class="form-control input-md"
                        oninput="vCPF(this)"
-                        value="<?php echo isset( $mototaxi) ?  $mototaxi->getCpf() : ""; ?>" required>
+                       value="<?php echo isset($mototaxi) ? $mototaxi->getCpf() : ""; ?>" required>
 
             </div>
         </div>
@@ -50,8 +65,8 @@ if (isset($_GET['id'])) {
             <label class="col-md-4 control-label" for="endereco">Endereço:</label>  
             <div class="col-md-5">
                 <input id="endereco" name="endereco" type="text" placeholder="endereco" class="form-control input-md"
-                         pattern="[A-Za-zA-zÀ-ú0-9 ,.]+"
-                        value="<?php echo isset( $mototaxi) ?  $mototaxi->getEndereco() : ""; ?>">
+                       pattern="[A-Za-zA-zÀ-ú0-9 ,.]+"
+                       value="<?php echo isset($mototaxi) ? $mototaxi->getEndereco() : ""; ?>">
 
             </div>
         </div>
@@ -61,11 +76,11 @@ if (isset($_GET['id'])) {
             <label class="col-md-4 control-label" for="cidade">Cidade:</label>  
             <div class="col-md-4">
                 <input id="cidade" name="cidade" type="text" placeholder="cidade" class="form-control input-md"
-                        pattern="[A-Za-zA-zÀ-ú ]+"
-                        value="<?php echo isset( $mototaxi) ?  $mototaxi->getCidade() : ""; ?>" required>
+                       pattern="[A-Za-zA-zÀ-ú ]+"
+                       value="<?php echo isset($mototaxi) ? $mototaxi->getCidade() : ""; ?>" required>
 
             </div>
-             <div class="col-md-2">
+            <div class="col-md-2">
                 <div class="col-lg-5">
                     <div class="form-group">
                         <select class="form-control selecionar" type="text" name="uf">
@@ -108,17 +123,17 @@ if (isset($_GET['id'])) {
             <label class="col-md-4 control-label" for="telefone">Telefone:</label>  
             <div class="col-md-4">
                 <input id="telefone" name="telefone" type="text" placeholder="(00) 0 0000-0000" class="form-control input-md"
-                        value="<?php echo isset( $mototaxi) ?  $mototaxi->gettelefone() : ""; ?>"
-                        pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" required>
+                       value="<?php echo isset($mototaxi) ? $mototaxi->gettelefone() : ""; ?>"
+                       pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" required>
 
             </div>
         </div>
- <div class="form-group">
+        <div class="form-group">
             <label class="col-md-4 control-label" for="telefone">Preço por KM:</label>  
             <div class="col-md-4">
                 <input id="preco_por_km" name="preco_por_km" type="text" placeholder="00.00" class="form-control input-md"
                        pattern="\d+(\.\d{2})?"
-                       value="<?php echo isset( $mototaxi) ?  $mototaxi->getPreco_km() : ""; ?>" required>
+                       value="<?php echo isset($mototaxi) ? $mototaxi->getPreco_km() : ""; ?>" required>
 
             </div>
         </div>
@@ -127,8 +142,8 @@ if (isset($_GET['id'])) {
             <label class="col-md-4 control-label" for="email">Email:</label>  
             <div class="col-md-5">
                 <input id="email" name="email" type="text" placeholder="email" class="form-control input-md"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
-                        value="<?php echo isset( $usuario) ?  $usuario->getemail() : ""; ?>" required>
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
+                       value="<?php echo isset($usuario) ? $usuario->getemail() : ""; ?>" required>
 
             </div>
         </div>
@@ -143,30 +158,32 @@ if (isset($_GET['id'])) {
         </div>
 
         <!-- Select cooperativa Basic -->
-		<?php 
-			$cooperativas = $repositorioCooperativa -> getListaCooperativas();
-		?>
+        <?php
+        $cooperativas = $repositorioCooperativa->getListaCooperativas();
+        ?>
         <div class="form-group">
             <label class="col-md-4 control-label" for="idCooperativa">Cooperativa:</label>
             <div class="col-md-5">
-                <select id="idCooperativa" name="idCooperativa" class="form-control selecionar">
-				<?php
-				while ($cooperativa = array_shift($cooperativas)){
-					echo "<option value='".$cooperativa->getCodigo()."'>".$cooperativa->getNome()."</option>";
-				}
-				?>
+                <select id="idCooperativa" name="idCooperativa" class="form-control selecionar" onclick="buscaPonto()">
+                    <?php
+                    while ($cooperativa = array_shift($cooperativas)) {
+                        echo "<option value='" . $cooperativa->getCodigo() . "'>" . $cooperativa->getNome() . "</option>";
+                    }
+                    ?>
                     <option value="1">Cooperativa</option>
                 </select>
             </div>
         </div>
-
         <!-- Select Basic  ponto mototaxi -->
+
         <div class="form-group">
             <label class="col-md-4 control-label" for="ponto">Ponto:</label>
             <div class="col-md-5">
-                <select id="idPonto" name="idPonto" class="form-control">
-                    <option value="5">ponto</option>
-                </select>
+                <div id="listaPontos">
+                    <select id="idPonto" name="idPonto" class="form-control selecionar">
+                        <option value="5">Selecione cooperativa</option>
+                    </select>
+                </div>
             </div>
         </div>
 

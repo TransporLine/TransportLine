@@ -70,5 +70,6 @@ while ($ponto = array_shift($pontos)) {
     <div id="mapa_view"></div>
     <div id="informacao">
         <h3 align="center">Selecione a opção ver detalhes em um ponto.</h3>
+		<img src="imagens/site/click.png" class="img-responsive">
     </div>
 </div>

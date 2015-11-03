@@ -3486,7 +3486,8 @@ tbody.collapse.in {
         background-color: transparent;
         cursor: not-allowed; }
   .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-    background-color: #D0DF91;
+
+   background-color: #158CCA;
     border-color: #69AD58; }
   .nav .nav-divider {
     height: 1px;
@@ -3502,15 +3503,18 @@ tbody.collapse.in {
     float: left;
     margin-bottom: -1px; }
     .nav-tabs > li > a {
+	  color:#fff;
       margin-right: 2px;
       line-height: 1.42857;
       border: 1px solid transparent;
       border-radius: 4px 4px 0 0; }
       .nav-tabs > li > a:hover {
+	   background-color: #5bc0de;
+	   color:#fff;
         border-color: #D0DF91 #D0DF91 #ddd; }
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-      color: #000000;
-      background-color: #C5D925;
+      color: #fff;
+      background-color: #5bc0de;
       border: 1px solid #ddd;
       border-bottom-color: transparent;
       cursor: default; }

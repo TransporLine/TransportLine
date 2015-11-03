@@ -1,5 +1,4 @@
 <?php
-
 class Mototaxi {
 
     private $codigo;
@@ -135,8 +134,6 @@ class Mototaxi {
     function setUf($uf) {
         $this->uf = $uf;
     }
-
-
 }
 ?>
 
